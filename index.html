@@ -85,7 +85,7 @@
     <!-- 1. The Image Element -->
     <div id="image-container">
         <!-- Start by showing the first image -->
-        <img id="myImage" src="images/1.png" alt="Currently displayed image">
+        <img id="myImage" src="images/0.png" alt="Currently displayed image">
     </div>
 
     <!-- 2. The Button Group -->
@@ -105,7 +105,7 @@
 
         // Configuration
         const TOTAL_IMAGES = 8;
-        let currentImageIndex = 1; 
+        let currentImageIndex = 0; 
         const SPECIAL_IMAGE_PATH = 'images/0.png'; 
         
         // --- Feedback Function (for buttons) ---
@@ -192,7 +192,7 @@
 
         // Set initial button text when the page loads
         randomButton.textContent = "Show Random Image";
-        specialButton.textContent = "Show Special Image (0.png)";
+        specialButton.textContent = "0.png is Displayed!";
         
         // **Important:** Initial state setup. The first image is already loaded 
         // when the page loads, so we don't need the 'image-loading' class.
