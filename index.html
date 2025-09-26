@@ -63,6 +63,12 @@
         #specialImageButton:hover {
             background-color: #1e7e34;
         }
+        /* New CSS for the loading state */
+        .loading {
+            background-color: #ffc107 !important; /* Yellow for attention */
+            cursor: wait !important;
+            pointer-events: none; /* Disables clicking during the 'wait' state */
+        }
     </style>
 </head>
 <body>
@@ -81,7 +87,8 @@
         <button id="specialImageButton" class="action-button">Show Special Image (0.png)</button>
     </div>
 
-    <!-- 3. The JavaScript -->
+    
+<!-- 3. The JavaScript (UPDATED with Loading Feedback) -->
     <script>
         // Get references to the HTML elements
         const imageElement = document.getElementById('myImage');
@@ -90,52 +97,89 @@
 
         // Configuration
         const TOTAL_IMAGES = 8;
-        // The special image is handled separately, but we still need 
-        // to track the state to prevent showing the same random image twice.
         let currentImageIndex = 1; 
-        const SPECIAL_IMAGE_PATH = 'images/0.png'; // Path to your special image
+        const SPECIAL_IMAGE_PATH = 'images/0.png'; 
+        
+        // --- Feedback Function ---
+        function setButtonLoading(button, originalText) {
+            button.classList.add('loading');
+            button.textContent = 'Loading... Please wait';
+            
+            // Re-enable the button after a short delay (simulating load time)
+            // For real-world use, you would remove this timeout and only re-enable
+            // the button inside the image's 'load' event, but for simple use, a delay is easier.
+            setTimeout(() => {
+                button.classList.remove('loading');
+                button.textContent = originalText;
+            }, 500); // 500 milliseconds (0.5 seconds) delay
+        }
 
         // --- Random Button Logic ---
         randomButton.addEventListener('click', function() {
             
+            // Check if already loading/disabled
+            if (randomButton.classList.contains('loading')) {
+                return;
+            }
+
+            // 1. Set the visual loading state immediately
+            setButtonLoading(randomButton, "Show New Random Image");
+
+            // --- The Image Logic starts here ---
             let newIndex;
             
             // Loop to ensure the new random image is *different* from the current one
-            // We check against 0 as well, in case the previous image was 0.png
             do {
                 // Generates a random integer from 1 to 8
                 newIndex = Math.floor(Math.random() * TOTAL_IMAGES) + 1;
             } while (newIndex === currentImageIndex);
             
-            // 1. Update the tracking variable
+            // 2. Update the tracking variable
             currentImageIndex = newIndex;
 
-            // 2. Construct the new file path and update the image
+            // 3. Construct the new file path and update the image
             const newImagePath = `images/${currentImageIndex}.png`;
-            imageElement.src = newImagePath;
             
-            // Optional: Update button text
-            randomButton.textContent = "Show New Random Image";
+            // We use a small delay here to ensure the "Loading" state is visible,
+            // otherwise the image change happens too fast.
+            setTimeout(() => {
+                imageElement.src = newImagePath;
+                // Since the random button was clicked, reset the special button text
+                specialButton.textContent = "Show Special Image (0.png)";
+            }, 50); // Small delay to allow the loading state to register visually
         });
 
 
         // --- Special Button Logic ---
         specialButton.addEventListener('click', function() {
             
-            // 1. Check if the special image is ALREADY showing to avoid unnecessary reloads
-            if (imageElement.src.endsWith(SPECIAL_IMAGE_PATH)) {
-                return; // Do nothing if it's already showing
+            // Check if already loading/disabled
+            if (specialButton.classList.contains('loading')) {
+                return;
             }
 
-            // 2. Set the image source directly to the special image path
-            imageElement.src = SPECIAL_IMAGE_PATH;
+            // 1. Set the visual loading state immediately
+            setButtonLoading(specialButton, "0.png is Displayed!");
 
-            // 3. Mark the current index as 0 (or a value outside 1-8) for the random button's check
-            currentImageIndex = 0; 
+            // 2. Check if the special image is ALREADY showing 
+            if (currentImageIndex === 0) {
+                // Only reset the loading state, no image change needed
+                return; 
+            }
+            
+            // --- The Image Logic starts here ---
+            
+            // We use a small delay here for the loading state to be visible
+            setTimeout(() => {
+                // 3. Set the image source directly to the special image path
+                imageElement.src = SPECIAL_IMAGE_PATH;
 
-            // Optional: Update button text
-            specialButton.textContent = "0.png is Displayed!";
-            randomButton.textContent = "Show Random Image";
+                // 4. Mark the current index as 0 
+                currentImageIndex = 0; 
+                
+                // Reset the random button text
+                randomButton.textContent = "Show Random Image";
+            }, 50); 
         });
 
 
@@ -143,6 +187,8 @@
         randomButton.textContent = "Show Random Image";
         specialButton.textContent = "Show Special Image (0.png)";
     </script>
+
+  
 
 </body>
 </html>
