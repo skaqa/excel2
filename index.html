@@ -61,7 +61,7 @@
     <!-- 2. The Button Element -->
     <button id="changeImageButton">Show Next Image</button>
 
-    <!-- 3. The JavaScript -->
+    <!-- 3. The JavaScript (UPDATED for Random Logic) -->
     <script>
         // Get references to the HTML elements
         const imageElement = document.getElementById('myImage');
@@ -69,38 +69,41 @@
 
         // Configuration
         const TOTAL_IMAGES = 8;
-        // Start the counter at the index of the image currently displayed (1.png)
-        let currentImageIndex = 1; 
+        let currentImageIndex = 1; // Start at 1.png
 
         // Function to run when the button is clicked
         buttonElement.addEventListener('click', function() {
             
-            // 1. Increment the index
-            currentImageIndex++;
-
-            // 2. Handle the wrap-around: 
-            // If the index goes past the total (8), reset it back to 1.
-            if (currentImageIndex > TOTAL_IMAGES) {
-                currentImageIndex = 1;
-            }
+            // 1. Generate a random integer between 1 and TOTAL_IMAGES (inclusive)
+            let newIndex;
+            
+            // Loop to ensure the new image is *different* from the current one
+            do {
+                // Math.random() gives a number from 0 (inclusive) to 1 (exclusive)
+                // Math.floor(Math.random() * TOTAL_IMAGES) gives a number from 0 to 7
+                // Adding 1 shifts it to the desired range: 1 to 8
+                newIndex = Math.floor(Math.random() * TOTAL_IMAGES) + 1;
+            } while (newIndex === currentImageIndex);
+            
+            // 2. Update the tracking variable
+            currentImageIndex = newIndex;
 
             // 3. Construct the new file path
-            // Example: 'images/' + 2 + '.png'  -> 'images/2.png'
+            // Example: 'images/' + 7 + '.png'  -> 'images/7.png'
             const newImagePath = `images/${currentImageIndex}.png`;
 
             // 4. Update the image source (this changes the image displayed)
             imageElement.src = newImagePath;
 
-            // Optional: Update the button text to show the next image in the sequence
-            let nextIndex = currentImageIndex + 1;
-            if (nextIndex > TOTAL_IMAGES) {
-                nextIndex = 1; // If we are at 8, the next one is 1
-            }
-            buttonElement.textContent = `Show Next Image (${nextIndex}.png)`;
+            // 5. Update the button text
+            buttonElement.textContent = "Show Random Image";
+            
+            // Optional: You could show which image is currently displayed
+            // buttonElement.textContent = `Showing Image ${currentImageIndex}.png`;
         });
 
         // Set the initial button text when the page loads
-        buttonElement.textContent = `Show Next Image (2.png)`;
+        buttonElement.textContent = "Show Random Image";
     </script>
 
 </body>
