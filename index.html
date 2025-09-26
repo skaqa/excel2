@@ -5,6 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Image Viewer with Special Image</title>
+    <!-- PRELOAD INSTRUCTIONS START HERE -->
+    <link rel="preload" as="image" href="images/0.png">
+    <link rel="preload" as="image" href="images/1.png">
+    <link rel="preload" as="image" href="images/2.png">
+    <link rel="preload" as="image" href="images/3.png">
+    <link rel="preload" as="image" href="images/4.png">
+    <link rel="preload" as="image" href="images/5.png">
+    <link rel="preload" as="image" href="images/6.png">
+    <link rel="preload" as="image" href="images/7.png">
+    <link rel="preload" as="image" href="images/8.png">
+    <!-- PRELOAD INSTRUCTIONS END HERE -->
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -85,7 +96,7 @@
     <!-- 1. The Image Element -->
     <div id="image-container">
         <!-- Start by showing the first image -->
-        <img id="myImage" src="images/0.png" alt="Currently displayed image">
+        <img id="myImage" src="images/0.png" alt="Currently displayed image" decoding="async">
     </div>
 
     <!-- 2. The Button Group -->
