@@ -1,12 +1,108 @@
+    
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>My GitHub Page</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Changer Website</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+
+        #image-container {
+            margin-bottom: 20px;
+            border: 5px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        #myImage {
+            width: 300px; /* Set a fixed size for the image */
+            height: 300px;
+            object-fit: cover; /* Ensures the image covers the area without distortion */
+            display: block;
+        }
+
+        #changeImageButton {
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+
+        #changeImageButton:hover {
+            background-color: #0056b3;
+        }
+    </style>
 </head>
 <body>
-  <h1>Hello, World!</h1>
-  <p>https://github.com/skaqa/excel1/releases/download/ver1/excel.xlsx</p>
-  <p>https://github.com/skaqa/excel1/releases/download/ver1/excel2.xlsx</p>
+
+    <h1>Click the Button to Change the Image!</h1>
+
+    <!-- 1. The Image Element -->
+    <div id="image-container">
+        <!-- The 'src' attribute is the initial image. We give it an 'id' to target it with JavaScript. -->
+        <img id="myImage" src="https://via.placeholder.com/300x300/87CEEB/FFFFFF?text=Default+Image" alt="Initial default image">
+    </div>
+
+    <!-- 2. The Button Element -->
+    <button id="changeImageButton">Display Custom Image</button>
+
+    <!-- 3. The JavaScript -->
+    <script>
+        // Get references to the HTML elements using their IDs
+        const imageElement = document.getElementById('myImage');
+        const buttonElement = document.getElementById('changeImageButton');
+
+        // Define the URL for your custom image
+        // IMPORTANT: Replace this URL with the path to your own image file (e.g., "my-photo.jpg")
+        // or a different public image URL.
+        const CUSTOM_IMAGE_URL = 'https://via.placeholder.com/300x300/4CAF50/FFFFFF?text=Custom+Image'; 
+        
+        // Define the URL for a second custom image (for toggling)
+        const SECOND_CUSTOM_IMAGE_URL = 'https://via.placeholder.com/300x300/FF5733/FFFFFF?text=Another+Custom+Image';
+
+        // Variable to track which image is currently showing
+        let isDefaultImage = true;
+
+        // Add an event listener to the button
+        // This function will run every time the button is clicked
+        buttonElement.addEventListener('click', function() {
+            
+            // Toggling logic: checks the current state and switches to the other image
+            if (isDefaultImage) {
+                // Change the image source to the first custom image
+                imageElement.src = CUSTOM_IMAGE_URL; 
+                buttonElement.textContent = "Show Next Image";
+                isDefaultImage = false; // Update the state
+            } else {
+                // Change the image source to the second custom image
+                imageElement.src = SECOND_CUSTOM_IMAGE_URL; 
+                buttonElement.textContent = "Show Default Image";
+                isDefaultImage = true; // Update the state (or you could set it to a third image)
+            }
+
+            // Note: If you only wanted it to change *once* to your custom image, you would use:
+            // imageElement.src = CUSTOM_IMAGE_URL; 
+            // buttonElement.textContent = "Image Displayed!";
+            // buttonElement.disabled = true; // Disable the button after one click
+        });
+    </script>
+
 </body>
 </html>
+
+  
