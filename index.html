@@ -26,10 +26,17 @@
         }
 
         #myImage {
-            width: 400px; /* Adjust size as needed */
+            width: 400px; 
             height: 400px;
             object-fit: cover; 
             display: block;
+            opacity: 1; /* Start fully visible */
+            transition: opacity 0.3s ease-in-out; /* Smooth transition */
+        }
+
+        /* New CSS for when the image is loading */
+        .image-loading {
+            opacity: 0; /* Make the image invisible */
         }
 
         #button-group {
@@ -88,7 +95,8 @@
     </div>
 
     
-<!-- 3. The JavaScript (UPDATED with Loading Feedback) -->
+    
+<!-- 3. The JavaScript (UPDATED with Image Loading Feedback) -->
     <script>
         // Get references to the HTML elements
         const imageElement = document.getElementById('myImage');
@@ -100,96 +108,95 @@
         let currentImageIndex = 1; 
         const SPECIAL_IMAGE_PATH = 'images/0.png'; 
         
-        // --- Feedback Function ---
-        function setButtonLoading(button, originalText) {
-            button.classList.add('loading');
-            button.textContent = 'Loading... Please wait';
-            
-            // Re-enable the button after a short delay (simulating load time)
-            // For real-world use, you would remove this timeout and only re-enable
-            // the button inside the image's 'load' event, but for simple use, a delay is easier.
-            setTimeout(() => {
+        // --- Feedback Function (for buttons) ---
+        function setButtonLoading(button, originalText, isLoading) {
+            if (isLoading) {
+                button.classList.add('loading');
+                button.textContent = 'Loading...';
+            } else {
+                // Re-enable the button
                 button.classList.remove('loading');
                 button.textContent = originalText;
-            }, 500); // 500 milliseconds (0.5 seconds) delay
+            }
+        }
+
+        // --- Image Load Handler ---
+        // This function runs every time a new image finishes loading
+        imageElement.addEventListener('load', function() {
+            // 1. Remove the loading class to make the image visible again (fades in due to CSS)
+            imageElement.classList.remove('image-loading');
+
+            // 2. Re-enable the button that was just clicked
+            // Check which button is currently disabled and re-enable it
+            if (randomButton.classList.contains('loading')) {
+                setButtonLoading(randomButton, "Show New Random Image", false);
+            } else if (specialButton.classList.contains('loading')) {
+                setButtonLoading(specialButton, "0.png is Displayed!", false);
+            }
+        });
+
+        // --- Core Image Change Function ---
+        function changeImage(newPath, button) {
+            // 1. Check if already loading/disabled
+            if (button.classList.contains('loading')) {
+                return;
+            }
+
+            // 2. Set the visual loading state immediately for the button
+            const originalText = button.id === 'randomImageButton' ? "Show New Random Image" : "0.png is Displayed!";
+            setButtonLoading(button, originalText, true);
+
+            // 3. Set the image element to the loading state (opacity: 0)
+            imageElement.classList.add('image-loading');
+
+            // 4. Update the image source (The 'load' event handler above will manage visibility)
+            imageElement.src = newPath;
         }
 
         // --- Random Button Logic ---
         randomButton.addEventListener('click', function() {
             
-            // Check if already loading/disabled
-            if (randomButton.classList.contains('loading')) {
-                return;
-            }
-
-            // 1. Set the visual loading state immediately
-            setButtonLoading(randomButton, "Show New Random Image");
-
-            // --- The Image Logic starts here ---
+            // Generate a new index different from the current one
             let newIndex;
-            
-            // Loop to ensure the new random image is *different* from the current one
             do {
-                // Generates a random integer from 1 to 8
                 newIndex = Math.floor(Math.random() * TOTAL_IMAGES) + 1;
             } while (newIndex === currentImageIndex);
             
-            // 2. Update the tracking variable
             currentImageIndex = newIndex;
-
-            // 3. Construct the new file path and update the image
             const newImagePath = `images/${currentImageIndex}.png`;
-            
-            // We use a small delay here to ensure the "Loading" state is visible,
-            // otherwise the image change happens too fast.
-            setTimeout(() => {
-                imageElement.src = newImagePath;
-                // Since the random button was clicked, reset the special button text
-                specialButton.textContent = "Show Special Image (0.png)";
-            }, 50); // Small delay to allow the loading state to register visually
+
+            // Reset special button text
+            specialButton.textContent = "Show Special Image (0.png)";
+
+            // Call the shared image change function
+            changeImage(newImagePath, randomButton);
         });
 
 
         // --- Special Button Logic ---
         specialButton.addEventListener('click', function() {
             
-            // Check if already loading/disabled
-            if (specialButton.classList.contains('loading')) {
-                return;
-            }
-
-            // 1. Set the visual loading state immediately
-            setButtonLoading(specialButton, "0.png is Displayed!");
-
-            // 2. Check if the special image is ALREADY showing 
+            // Check if the special image is ALREADY showing
             if (currentImageIndex === 0) {
-                // Only reset the loading state, no image change needed
                 return; 
             }
             
-            // --- The Image Logic starts here ---
-            
-            // We use a small delay here for the loading state to be visible
-            setTimeout(() => {
-                // 3. Set the image source directly to the special image path
-                imageElement.src = SPECIAL_IMAGE_PATH;
+            // Set index and reset random button text
+            currentImageIndex = 0; 
+            randomButton.textContent = "Show Random Image";
 
-                // 4. Mark the current index as 0 
-                currentImageIndex = 0; 
-                
-                // Reset the random button text
-                randomButton.textContent = "Show Random Image";
-            }, 50); 
+            // Call the shared image change function
+            changeImage(SPECIAL_IMAGE_PATH, specialButton);
         });
 
 
         // Set initial button text when the page loads
         randomButton.textContent = "Show Random Image";
         specialButton.textContent = "Show Special Image (0.png)";
+        
+        // **Important:** Initial state setup. The first image is already loaded 
+        // when the page loads, so we don't need the 'image-loading' class.
     </script>
-
-  
-
 </body>
 </html>
 
