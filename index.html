@@ -165,7 +165,9 @@
 
 
         // Configuration
-        const TOTAL_IMAGES = 8;
+        // This is the number of "flashcard" images (1.png to 8.png = 8 images).
+        // The index 0 is reserved for the 'Ready' screen.
+        const TOTAL_IMAGES = 8; 
         let currentImageIndex = 0; 
         const SPECIAL_IMAGE_PATH = 'images/0.png'; 
         
@@ -224,7 +226,6 @@
             }
 
             // Temporarily set the button to 'loading' state to prevent re-clicks during the 1-second display.
-            // We use the class but don't change the text yet, just disable interaction.
             randomButton.classList.add('loading'); 
             
             // 2. Show the text overlay
@@ -242,9 +243,11 @@
                 // c. Generate a new index different from the current one
                 let newIndex;
                 do {
+                    // Generate a random index between 1 and TOTAL_IMAGES (i.e., 1 to 8)
                     newIndex = Math.floor(Math.random() * TOTAL_IMAGES) + 1;
-                } while (newIndex === currentImageIndex);
-                
+                } while (newIndex === currentImageIndex); // <<< THE LOGIC TO PREVENT DUPLICATES
+
+                // Update the current index and path
                 currentImageIndex = newIndex;
                 const newImagePath = `images/${currentImageIndex}.png`;
 
@@ -262,7 +265,7 @@
         // --- Special Button Logic (UNCHANGED) ---
         specialButton.addEventListener('click', function() {
             
-            // Check if the special image is ALREADY showing
+            // Check if the special image is ALREADY showing (index 0)
             if (currentImageIndex === 0) {
                 return; 
             }
