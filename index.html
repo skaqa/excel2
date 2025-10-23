@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Random Vocabulary Flashcard</title>
     <!-- PRELOAD INSTRUCTIONS START HERE -->
+    <link rel="preload" as="image" href="images/background.png">
     <link rel="preload" as="image" href="images/0.png">
     <link rel="preload" as="image" href="images/1.png">
     <link rel="preload" as="image" href="images/2.png">
@@ -29,6 +30,10 @@
             min-height: 100vh;
             margin: 0;
             background-color: #f4f4f9;
+            background-image: url('images/background.png');
+            background-size: cover; /* Scales image to cover the entire background */
+            background-position: center; /* Centers the image */
+            background-repeat: no-repeat; /* Prevents image from repeating */
         }
 
         #image-container {
