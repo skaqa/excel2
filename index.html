@@ -142,7 +142,7 @@
             if (randomButton.classList.contains('loading')) {
                 setButtonLoading(randomButton, "Show New Random Image", false);
             } else if (specialButton.classList.contains('loading')) {
-                setButtonLoading(specialButton, "0.png is Displayed!", false);
+                setButtonLoading(specialButton, "Ready!", false);
             }
         });
 
@@ -154,7 +154,7 @@
             }
 
             // 2. Set the visual loading state immediately for the button
-            const originalText = button.id === 'randomImageButton' ? "Show New Random Image" : "0.png is Displayed!";
+            const originalText = button.id === 'randomImageButton' ? "Show New Random Image" : "Ready!";
             setButtonLoading(button, originalText, true);
 
             // 3. Set the image element to the loading state (opacity: 0)
@@ -203,7 +203,7 @@
 
         // Set initial button text when the page loads
         randomButton.textContent = "Show Random Image";
-        specialButton.textContent = "0.png is Displayed!";
+        specialButton.textContent = "Ready!";
         
         // **Important:** Initial state setup. The first image is already loaded 
         // when the page loads, so we don't need the 'image-loading' class.
