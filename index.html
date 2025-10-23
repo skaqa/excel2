@@ -27,21 +27,6 @@
             /* Subtle Text Shadow for Depth */
             text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 
-            /* RGB Light Effect Animation */
-            animation: rgb-light 120s linear infinite;
-            background: none; /* Remove gradient for clarity */
-            -webkit-background-clip: initial;
-            -webkit-text-fill-color: initial;
-        }
-
-        /* Keyframes for RGB Light Effect */
-        @keyframes rgb-light {
-            0% { color: #ff0000; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 8px #ff0000; } /* Red */
-            33% { color: #00ff00; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 8px #00ff00; } /* Green */
-            66% { color: #0000ff; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 8px #0000ff; } /* Blue */
-            100% { color: #ff0000; text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3), 0 0 8px #ff0000; } /* Back to Red */
-        }
-
         /* Hover Effect */
         h1:hover {
             transform: scale(1.1);
