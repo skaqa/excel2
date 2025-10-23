@@ -102,7 +102,7 @@
     <!-- 2. The Button Group -->
     <div id="button-group">
         <button id="randomImageButton" class="action-button">Show Random Image</button>
-        <button id="specialImageButton" class="action-button">Show Special Image (0.png)</button>
+        <button id="specialImageButton" class="action-button">Back To Ready</button>
     </div>
 
     
@@ -177,7 +177,7 @@
             const newImagePath = `images/${currentImageIndex}.png`;
 
             // Reset special button text
-            specialButton.textContent = "Show Special Image (0.png)";
+            specialButton.textContent = "Back To Ready";
 
             // Call the shared image change function
             changeImage(newImagePath, randomButton);
