@@ -20,6 +20,38 @@
     <style>
         h1 {
             font-family: 'Comic Sans MS', sans-serif;
+            /* Basic styling */
+            font-size: 2.5em;
+            color: #333;
+            text-align: center;
+            margin-top: 50px;
+
+            /* Text Effect 1: Text Shadow */
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+
+            /* Text Effect 2: Gradient Text */
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+
+            /* Text Effect 3: Animation (e.g., glowing effect) */
+            animation: glow 1.5s ease-in-out infinite alternate;
+        }
+
+        /* Keyframes for glowing animation */
+        @keyframes glow {
+            from {
+                text-shadow: 0 0 5px #fff, 0 0 10px #ff6b6b, 0 0 15px #4ecdc4;
+            }
+            to {
+                text-shadow: 0 0 10px #fff, 0 0 20px #ff6b6b, 0 0 30px #4ecdc4;
+            }
+        }
+
+        /* Optional: Hover effect */
+        h1:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
         }
         body {
             font-family: Arial, sans-serif;
