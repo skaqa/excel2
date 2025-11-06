@@ -1,3 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random Vocabulary Flashcard</title>
+    <!-- PRELOAD INSTRUCTIONS START HERE -->
+    <link rel="preload" as="image" href="images/background.png">
+    <link rel="preload" as="image" href="images/0.png">
+    <link rel="preload" as="image" href="images/1.png">
+    <link rel="preload" as="image" href="images/2.png">
+    <link rel="preload" as="image" href="images/3.png">
+    <link rel="preload" as="image" href="images/4.png">
+    <link rel="preload" as="image" href="images/5.png">
+    <link rel="preload" as="image" href="images/6.png">
+    <link rel="preload" as="image" href="images/7.png">
+    <link rel="preload" as="image" href="images/8.png">
+    <!-- PRELOAD INSTRUCTIONS END HERE -->
+    <style>
+       h1 {
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 2.5em;
+            text-align: center;
+            margin-top: 50px;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+        }
+        h1:hover {
+            transform: scale(1.1);
+            transition: transform 0.3s ease;
+        }
+        h2 {
+            font-family: 'Comic Sans MS', sans-serif;
+            background-color: #ffcc00;
+            border-radius: 10px;
+            box-shadow: 3px 3px 5px rgba(0, 0, 0, 0.3);
+            padding: 10px;
+            display: inline-block;
+        }
+       
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+            background-image: url('images/background.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+        }
+        #image-container {
+            margin-bottom: 20px;
+            border: 5px solid #ccc;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+        #myImage {
+            width: 400px;
+            height: 400px;
+            object-fit: cover;
+            display: block;
+            opacity: 1;
+            transition: opacity 0.3s ease-in-out;
+        }
+        .image-loading {
+            opacity: 0;
+        }
+        #button-group {
+            display: flex;
+            gap: 15px;
+        }
+        .action-button {
+            padding: 12px 25px;
+            font-size: 18px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        #randomImageButton {
+            background-color: #007bff;
+            color: white;
+        }
+        #randomImageButton:hover {
+            background-color: #0056b3;
+        }
+        #specialImageButton {
+            background-color: #28a745;
+            color: white;
+        }
+        #specialImageButton:hover {
+            background-color: #1e7e34;
+        }
+        .loading {
+            background-color: #ffc107 !important;
+            cursor: wait !important;
+            pointer-events: none;
+        }
+       
+        #text-overlay {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            font-family: 'Comic Sans MS', sans-serif;
+            font-size: 3em;
+            font-weight: bold;
+            color: white;
+            background-color: rgba(0, 0, 0, 0.8);
+            padding: 20px 40px;
+            border-radius: 10px;
+            opacity: 0;
+            transition: opacity 0.3s ease-in-out;
+            pointer-events: none;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        .show-text {
+            opacity: 1 !important;
+        }
+    </style>
+</head>
+<body>
+    <h1>Sentence Practice</h1>
+    <h2>What do / does ___ do on weekends?<br>___ ___ (do what?) ___ on weekends.</h2>
+    <div id="image-container">
+        <img id="myImage" src="images/0.png" alt="Currently displayed image" decoding="async">
+    </div>
+    <div id="button-group">
+        <button id="randomImageButton" class="action-button">Show Random Image</button>
+        <button id="specialImageButton" class="action-button">Back To Ready</button>
+    </div>
+    <div id="text-overlay">NEW IMAGE</div>
+   
 <script>
     // === ELEMENTS ===
     const imageElement = document.getElementById('myImage');
@@ -116,3 +254,5 @@
     randomButton.textContent = "Show Random Image";
     specialButton.textContent = "Back To Ready";
 </script>
+</body>
+</html>
